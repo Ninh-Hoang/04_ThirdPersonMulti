@@ -14,14 +14,22 @@ void AMovingPlatform::BeginPlay() {
 		SetReplicates(true);
 		SetReplicateMovement(true);
 	}
+
+	GlobalStartLocation = GetActorLocation();
+	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
 }
 
 void AMovingPlatform::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 	if (HasAuthority()) {
 		FVector Location = GetActorLocation();
-		FVector GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
-		FVector Direction = (GlobalTargetLocation - Location).GetSafeNormal();
+		float Distance = FVector::Dist(Location, GlobalStartLocation);
+		if (Distance > FVector::Dist(GlobalTargetLocation, GlobalStartLocation)) {
+			FVector Swap = GlobalStartLocation;
+			GlobalStartLocation = GlobalTargetLocation;
+			GlobalTargetLocation = Swap;
+		}
+		FVector Direction = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
 		Location += Direction * DeltaSeconds * MovingSpeed;
 		SetActorLocation(Location);
 	}
