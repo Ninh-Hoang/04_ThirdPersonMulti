@@ -26,7 +26,7 @@ public:
 	void SpawnPlayer();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setup")
-	int MaxPlayerCout = 4;
+	int MaxPlayerCout = 1;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Setup")
 	TArray<AActor*> Players;

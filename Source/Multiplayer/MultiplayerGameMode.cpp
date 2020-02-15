@@ -42,7 +42,6 @@ void AMultiplayerGameMode::SpawnPlayer() {
 			if (CurrentPlayer->PlayerStartTag.IsEqual(CurrentTagInt)) {
 				UE_LOG(LogTemp, Warning, TEXT("Player %s SpawnPoint found"), *CurrentPlayer->GetName());
 				UGameplayStatics::CreatePlayer(GetWorld(), i);
-
 				UObject* SpawnActor = Cast<UObject>(StaticLoadObject(UObject::StaticClass(), NULL, TEXT("/Game/Blueprints/BP_Player")));
 				UBlueprint* GeneratedBP = Cast<UBlueprint>(SpawnActor);
 
@@ -61,8 +60,7 @@ void AMultiplayerGameMode::SpawnPlayer() {
 				FActorSpawnParameters SpawnParams;
 				SpawnParams.Owner = this;
 				SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AMultiplayerCharacter* PlayerPawn = World->SpawnActor<AMultiplayerCharacter>(GeneratedBP->GeneratedClass, CurrentPlayer->GetActorLocation(), CurrentPlayer->GetActorRotation(), SpawnParams);
-
+				AMultiplayerCharacter* PlayerPawn = World->SpawnActor<AMultiplayerCharacter>(GeneratedBP->GeneratedClass, CurrentPlayer->GetActorLocation(), CurrentPlayer->GetActorRotation(), SpawnParams);	
 				APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), i);
 				PlayerController->Possess(PlayerPawn);
 				Players.AddUnique(PlayerPawn);
