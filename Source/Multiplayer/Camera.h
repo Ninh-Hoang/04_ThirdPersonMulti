@@ -7,6 +7,7 @@
 #include "Camera.generated.h"
 
 class AMultiplayerGameMode;
+class AMultiplayerCharacter;
 
 UCLASS()
 class MULTIPLAYER_API ACamera : public AActor
@@ -25,5 +26,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void ClassSetup();
+
 	AMultiplayerGameMode* GameMode;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<AActor*> PlayerRefs;
+
+	AMultiplayerCharacter* P1;
+	AMultiplayerCharacter* P2;
+	AMultiplayerCharacter* P3;
+	AMultiplayerCharacter* P4;
 };
